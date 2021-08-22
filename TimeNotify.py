@@ -19,7 +19,7 @@ def get_settings():
     events = settings.get('events', [])
     now = datetime.now()
     for event in events:
-        if event.get('time'):
+        if event.get('time') and len(event.get('week')):
             notify_time = now.strftime("%Y-%m-%d") + ' ' + event.get('time')
             event['time'] = int(datetime.strptime(
                 notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
