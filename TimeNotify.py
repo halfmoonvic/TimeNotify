@@ -11,11 +11,20 @@ SETTINGS = {}
 def get_settings():
     settings = sublime.load_settings(STATUSBARTIME_SETTING_FILE)
     SETTINGS['format'] = settings.get('format', '%H:%M:%S')
-    SETTINGS['interval'] = settings.get('interval', 1000)
+    SETTINGS['interval'] = settings.get('interval', 1000) * 1000
     SETTINGS['delay'] = settings.get('delay', 5)
     SETTINGS['onlyinview'] = settings.get('onlyinview', False)
     SETTINGS['lefty'] = settings.get('lefty', True)
-    SETTINGS['events'] = settings.get('events', [])
+
+    events = settings.get('events', [])
+    now = datetime.now()
+    for event in events:
+        if event.get('time'):
+            notify_time = now.strftime("%Y-%m-%d") + ' ' + event.get('time')
+            event['time'] = int(datetime.strptime(
+                notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
+
+    SETTINGS['events'] = events
 
 
 def plugin_loaded():
@@ -33,7 +42,7 @@ class Timer():
         self.status_key = '0__statusclock'
         self._format = SETTINGS['format']
         self._events = SETTINGS['events']
-        self._delay = SETTINGS['delay'] * 6000
+        self._delay = SETTINGS['delay']
 
     def displayTime(self, view, interval, onlyinview):
         now = datetime.now()
@@ -58,5 +67,9 @@ class Timer():
             return
 
         for event in self._events:
-            if time.weekday() + 1 in event.get('week') and event.get('time') == time.strftime("%H:%M:%S"):
-                sublime.message_dialog(event.get('message'))
+            print(event.get('time'), time.timestamp())
+            if time.weekday() + 1 in event.get('week') and event.get('time') == int(time.timestamp()):
+                # sublime.message_dialog(event.get('message'))
+                if sublime.ok_cancel_dialog(
+                        event.get('message'), 'delay %(delay)s minutes?' % {'delay': int(self._delay / 60)}):
+                    event['time'] = event['time'] + self._delay

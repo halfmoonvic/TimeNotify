@@ -1,9 +1,9 @@
 {
-    // Clock update interval
-    "interval": 1000,
+    // Clock update interval seconds
+    "interval": 1,
 
-    // time to delay notify minutes
-    "delay": 5,
+    // time to delay notify seconds
+    "delay": 300,
 
     // Display only when there is a view (Making it false will turn clock always even when there is no file in view)
     "onlyinview": false,
@@ -24,8 +24,8 @@
     "events": [
         // {
         //     "week": [1, 2, 3, 4, 5, 6, 7],
-        //     "time": "17:20:10",
+        //     "time": "19:01:50",
         //     "message": "time to eat"
-        // },
+        // }
     ]
 }
