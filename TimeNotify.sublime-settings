@@ -1,0 +1,31 @@
+{
+    // Clock update interval
+    "interval": 1000,
+
+    // time to delay notify minutes
+    "delay": 5,
+
+    // Display only when there is a view (Making it false will turn clock always even when there is no file in view)
+    "onlyinview": false,
+
+    // Specifies date / time format, where:
+    // %H - Hour (24-hour clock) as a decimal number [00, 23]
+    // %M - Minute as a decimal number [00, 59]
+    // %S - Second as a decimal number [00, 61]
+    // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
+    // notice you should remove the comment in the /Sublime Text/Packages/Status Bar Time/StatusBarTime.py
+    // remainsolar | pastsolar | remainluna | pastluna | progress
+    "format": "%H:%M:%S | %j | %m-%d | V3",
+
+    // Stick the clock on the left side of the status bar
+    "lefty": true,
+
+    // notify events
+    "events": [
+        // {
+        //     "week": [1, 2, 3, 4, 5, 6, 7],
+        //     "time": "17:20:10",
+        //     "message": "time to eat"
+        // },
+    ]
+}
