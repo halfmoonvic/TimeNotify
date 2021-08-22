@@ -69,7 +69,6 @@ class Timer():
         for event in self._events:
             print(event.get('time'), time.timestamp())
             if time.weekday() + 1 in event.get('week') and event.get('time') == int(time.timestamp()):
-                # sublime.message_dialog(event.get('message'))
                 if sublime.ok_cancel_dialog(
-                        event.get('message'), 'delay %(delay)s minutes?' % {'delay': int(self._delay / 60)}):
+                        event.get('message'), 'Delay %(delay)s M' % {'delay': int(self._delay / 60)}):
                     event['time'] = event['time'] + self._delay
