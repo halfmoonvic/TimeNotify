@@ -12,7 +12,7 @@ def get_settings():
     settings = sublime.load_settings(STATUSBARTIME_SETTING_FILE)
     SETTINGS['format'] = settings.get('format', '%H:%M:%S')
     SETTINGS['interval'] = settings.get('interval', 1000) * 1000
-    SETTINGS['delay'] = settings.get('delay', 5)
+    SETTINGS['delay'] = settings.get('delay', 300)
     SETTINGS['onlyinview'] = settings.get('onlyinview', False)
     SETTINGS['lefty'] = settings.get('lefty', True)
 
@@ -33,7 +33,6 @@ def plugin_loaded():
 
 class StatusBarTime(sublime_plugin.ViewEventListener):
     def __init__(self, view):
-        print('init times StatusBarTime')
         Timer().displayTime(view, SETTINGS['interval'], SETTINGS['onlyinview'])
 
 
@@ -67,8 +66,12 @@ class Timer():
             return
 
         for event in self._events:
-            print(event.get('time'), time.timestamp())
-            if time.weekday() + 1 in event.get('week') and event.get('time') == int(time.timestamp()):
+            if time.weekday() + 1 in event.get('week') and event['time'] == int(time.timestamp()):
+
                 if sublime.ok_cancel_dialog(
-                        event.get('message'), 'Delay %(delay)s M' % {'delay': int(self._delay / 60)}):
-                    event['time'] = event['time'] + self._delay
+                        event.get('message'),
+                        'Delay %(delay)s M' % {'delay': int(
+                            event.get('delay', self._delay) / 60)}
+                ):
+                    event['time'] = event['time'] + \
+                        event.get('delay', self._delay)
