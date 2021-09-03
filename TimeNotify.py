@@ -16,13 +16,15 @@ def get_settings():
     SETTINGS['onlyinview'] = settings.get('onlyinview', False)
     SETTINGS['lefty'] = settings.get('lefty', True)
 
-    events = settings.get('events', [])
     now = datetime.now()
+    events = settings.get('events', [])
+    events = [event for event in events if event.get(
+        'time') and len(event.get('week'))]
+
     for event in events:
-        if event.get('time') and len(event.get('week')):
-            notify_time = now.strftime("%Y-%m-%d") + ' ' + event.get('time')
-            event['time'] = int(datetime.strptime(
-                notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
+        notify_time = now.strftime("%Y-%m-%d") + ' ' + event['time']
+        event['time'] = int(datetime.strptime(
+            notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
 
     SETTINGS['events'] = events
 
@@ -66,10 +68,10 @@ class Timer():
             return
 
         for event in self._events:
-            if time.weekday() + 1 in event.get('week') and event['time'] == int(time.timestamp()):
+            if time.weekday() + 1 in event['week'] and event['time'] == int(time.timestamp()):
 
                 if sublime.ok_cancel_dialog(
-                        event.get('message'),
+                        event['message'],
                         'Delay %(delay)s M' % {'delay': int(
                             event.get('delay', self._delay) / 60)}
                 ):
