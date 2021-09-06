@@ -64,7 +64,7 @@ class Timer():
 
     def notify(self, view, time):
         actwin = sublime.active_window()
-        if not actwin or actwin.active_view().id() != view.id():
+        if not actwin or (actwin.active_view() and actwin.active_view().id() != view.id()):
             return
 
         for event in self._events:
