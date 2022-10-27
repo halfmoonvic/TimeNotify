@@ -3,6 +3,7 @@
 import sublime
 import sublime_plugin
 from datetime import datetime
+import re
 
 STATUSBARTIME_SETTING_FILE = 'TimeNotify.sublime-settings'
 SETTINGS = {}
@@ -21,13 +22,18 @@ def get_settings():
     events = [event for event in events if event.get('time')]
 
     for event in events:
-        notify_time = (event.get('week') and now.strftime(
-            "%Y-%m-%d") + ' ' + event['time']) or (event.get('time'))
-        event['time'] = int(datetime.strptime(
-            notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
+        dividing_lines = re.findall('-', event.get('time'))
+        notify_time = event['time']
+        if len(dividing_lines) == 0:
+            notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
+        if len(dividing_lines) == 1:
+            notify_time = now.strftime('%Y') + '-' + event['time']
+        if len(dividing_lines) == 2:
+            notify_time = event['time']
+
+        event['time'] = int(datetime.strptime(notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
 
     SETTINGS['events'] = events
-
 
 def plugin_loaded():
     get_settings()
