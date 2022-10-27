@@ -46,26 +46,24 @@ class Timer():
 
     def displayTime(self, view, interval, onlyinview):
         now = datetime.now()
-
         view.set_status(self.status_key, now.strftime(SETTINGS['format']))
 
-        if len(SETTINGS['events']):
-            self.notify(view, now)
-
         actwin = sublime.active_window()
+        same_active_view_id = actwin.active_view(
+        ) and actwin.active_view().id() == view.id()
 
         if not actwin:
             view.set_status(self.status_key, '')
             return
-        if not onlyinview or (actwin.active_view() and actwin.active_view().id() == view.id()):
+
+        if len(SETTINGS['events']) and same_active_view_id:
+            self.notify(view, now)
+
+        if not onlyinview or same_active_view_id:
             sublime.set_timeout(lambda: self.displayTime(
                 view, interval, onlyinview), interval)
 
     def notify(self, view, time):
-        actwin = sublime.active_window()
-        if not actwin or (actwin.active_view() and actwin.active_view().id() != view.id()):
-            return
-
         for event in SETTINGS['events']:
             if time.weekday() + 1 in event['week'] and event['time'] == int(time.timestamp()):
 
