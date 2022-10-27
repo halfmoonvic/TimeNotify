@@ -18,11 +18,11 @@ def get_settings():
 
     now = datetime.now()
     events = settings.get('events', [])
-    events = [event for event in events if event.get(
-        'time') and len(event.get('week'))]
+    events = [event for event in events if event.get('time')]
 
     for event in events:
-        notify_time = now.strftime("%Y-%m-%d") + ' ' + event['time']
+        notify_time = (event.get('week') and now.strftime(
+            "%Y-%m-%d") + ' ' + event['time']) or (event.get('time'))
         event['time'] = int(datetime.strptime(
             notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
 
@@ -56,7 +56,7 @@ class Timer():
             view.set_status(self.status_key, '')
             return
 
-        if len(SETTINGS['events']) and same_active_view_id:
+        if SETTINGS.get('events') and len(SETTINGS['events']) and same_active_view_id:
             self.notify(view, now)
 
         if not onlyinview or same_active_view_id:
@@ -64,13 +64,22 @@ class Timer():
                 view, interval, onlyinview), interval)
 
     def notify(self, view, time):
-        for event in SETTINGS['events']:
-            if time.weekday() + 1 in event['week'] and event['time'] == int(time.timestamp()):
+        nowtimestamp = int(time.timestamp())
 
-                if sublime.ok_cancel_dialog(
-                        event['message'],
-                        'Delay %(delay)s M' % {'delay': int(
-                            event.get('delay', SETTINGS['delay']) / 60)}
-                ):
-                    event['time'] = event['time'] + \
-                        event.get('delay', SETTINGS['delay'])
+        for event in SETTINGS['events']:
+            if (event.get('week') and time.weekday() + 1 in event['week']) or not event.get('week'):
+                if event.get('advance') and event['time'] - event['advance'] == nowtimestamp:
+                    self.advance(event['message'], event['advance'])
+                if event['time'] == nowtimestamp:
+                    self.delay(event['message'], event.get('delay', SETTINGS['delay']), event)
+
+    def advance(self, message, duration):
+        sublime.message_dialog('advance %(duration)s Hours: %(message)s' % {
+                               'duration': int(duration / 60 / 60), 'message': message})
+
+    def delay(self, message, duration, event):
+        if sublime.ok_cancel_dialog(
+            message,
+            'Delay %(delay)s Min' % {'delay': int(duration / 60)}
+        ):
+            event['time'] = event['time'] + duration

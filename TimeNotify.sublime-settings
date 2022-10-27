@@ -22,11 +22,19 @@
 
     // notify events
     "events": [
-        // {
-        //     "week": [1, 2, 3, 4, 5, 6, 7],
-        //     "time": "19:01:50",
-        //     "delay": 15,
-        //     "message": "time to eat"
-        // }
+        {
+            "week": [1, 2, 3, 4, 5, 6, 7],
+            "time": "17:43:00",
+            "advance": 10,
+            "delay": 10,
+            "message": "test"
+        },
+        {
+            "time": "2022-10-29 11:30:30",
+            // 24 hours
+            "advance": 86400,
+            "advance": 10,
+            "message": "......"
+        }
     ]
 }
