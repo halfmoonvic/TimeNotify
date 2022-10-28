@@ -23,9 +23,13 @@ def get_settings():
 
     for event in events:
         dividing_lines = re.findall('-', event.get('time'))
+        space_counts = re.findall(' ', event.get('time'))
         notify_time = event['time']
         if len(dividing_lines) == 0:
-            notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
+            if len(space_counts) == 0:
+                notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
+            else:
+                notify_time = now.strftime('%Y-%m') + '-' + event['time']
         if len(dividing_lines) == 1:
             notify_time = now.strftime('%Y') + '-' + event['time']
         if len(dividing_lines) == 2:

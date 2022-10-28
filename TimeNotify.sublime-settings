@@ -11,8 +11,7 @@
     // %S - Second as a decimal number [00, 61]
     // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
     // notice you should remove the comment in the /Sublime Text/Packages/Status Bar Time/StatusBarTime.py
-    // remainsolar | pastsolar | remainluna | pastluna | progress
-    "format": "%H:%M:%S | %j | %m-%d",
+    "format": "%H:%M:%S | %j | %m-%d | %A | V?",
 
     // Stick the clock on the left side of the status bar
     "lefty": true,
@@ -23,25 +22,29 @@
     // notify events
     "events": [
         {
+            // this day from monday to sunday
             "week": [1, 2, 3, 4, 5, 6, 7],
-            "time": "18:21:40",
+            "time": "18:32:00",
             "advance": 10,
             "delay": 10,
             "message": "test"
         },
         {
-            // notify every month of year
-            "time": "10-29 11:30:00",
-            "advance": 86400,
-            "message": "test month notify"
+            // this day of the month
+            "time": "29 09:55:30",
+            "advance": 86400, // 24 hours
+            "message": "day of the month"
         },
         {
-            // notify at precise time
-            "time": "2022-10-29 11:30:30",
-            // 24 hours
-            "advance": 86400,
-            "advance": 10,
-            "message": "test precise time"
+            // this day of the year
+            "time": "10-29 09:55:55",
+            "advance": 86400, // 24 hours
+            "message": "day of the year"
         },
+        {
+            "time": "2022-10-29 10:00:40",
+            "advance": 86400, // 24 hours
+            "message": "just one day"
+        }
     ]
 }
