@@ -14,6 +14,7 @@
     "format": "%H:%M:%S | %j | %m-%d | %A | V?",
 
     // Stick the clock on the left side of the status bar
+    // if you change this option, restart is required
     "lefty": true,
 
     // time to delay notify seconds

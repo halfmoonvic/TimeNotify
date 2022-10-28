@@ -54,7 +54,7 @@ class StatusBarTime(sublime_plugin.ViewEventListener):
 
 class Timer():
     def __init__(self):
-        self.status_key = '0__statusclock'
+        self.status_key = '0__statusclock' if SETTINGS['lefty'] else 'statusclock'
 
     def displayTime(self, view, interval, onlyinview):
         now = datetime.now()
