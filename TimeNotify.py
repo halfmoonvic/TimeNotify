@@ -31,9 +31,11 @@ def get_settings():
         if len(dividing_lines) == 2:
             notify_time = event['time']
 
-        event['time'] = int(datetime.strptime(notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
+        event['time'] = int(datetime.strptime(
+            notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
 
     SETTINGS['events'] = events
+
 
 def plugin_loaded():
     get_settings()
@@ -63,13 +65,13 @@ class Timer():
             return
 
         if SETTINGS.get('events') and len(SETTINGS['events']) and same_active_view_id:
-            self.notify(view, now)
+            self.notify(now)
 
         if not onlyinview or same_active_view_id:
             sublime.set_timeout(lambda: self.displayTime(
                 view, interval, onlyinview), interval)
 
-    def notify(self, view, time):
+    def notify(self, time):
         nowtimestamp = int(time.timestamp())
 
         for event in SETTINGS['events']:
@@ -77,7 +79,8 @@ class Timer():
                 if event.get('advance') and event['time'] - event['advance'] == nowtimestamp:
                     self.advance(event['message'], event['advance'])
                 if event['time'] == nowtimestamp:
-                    self.delay(event['message'], event.get('delay', SETTINGS['delay']), event)
+                    self.delay(event['message'], event.get(
+                        'delay', SETTINGS['delay']), event)
 
     def advance(self, message, duration):
         sublime.message_dialog('advance %(duration)s Hours: %(message)s' % {
