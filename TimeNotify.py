@@ -16,6 +16,7 @@ def get_settings():
     SETTINGS['delay'] = settings.get('delay', 300)
     SETTINGS['onlyinview'] = settings.get('onlyinview', False)
     SETTINGS['lefty'] = settings.get('lefty', True)
+    SETTINGS['eventdict'] = {}
 
     now = datetime.now()
     events = settings.get('events', [])
@@ -35,8 +36,13 @@ def get_settings():
         if len(dividing_lines) == 2:
             notify_time = event['time']
 
-        event['time'] = int(datetime.strptime(
+        timestamp = int(datetime.strptime(
             notify_time, '%Y-%m-%d %H:%M:%S').timestamp())
+
+        event['time'] = timestamp
+        SETTINGS['eventdict'][timestamp] = event
+        if event.get('advance'):
+            SETTINGS['eventdict'][timestamp - event['advance']] = event
 
     SETTINGS['events'] = events
 
@@ -77,14 +83,20 @@ class Timer():
 
     def notify(self, time):
         nowtimestamp = int(time.timestamp())
+        event = SETTINGS['eventdict'].get(nowtimestamp)
 
-        for event in SETTINGS['events']:
-            if (event.get('week') and time.weekday() + 1 in event['week']) or not event.get('week'):
-                if event.get('advance') and event['time'] - event['advance'] == nowtimestamp:
-                    self.advance(event['message'], event['advance'])
-                if event['time'] == nowtimestamp:
-                    self.delay(event['message'], event.get(
-                        'delay', SETTINGS['delay']), event)
+        # some event only happen one day from Monday to Sunday, not every day
+        if not event or not (not event.get('week') or time.weekday() + 1 in event['week']):
+            return
+
+        if nowtimestamp == event['time'] - event['advance']:
+            self.advance(event['message'], event['advance'])
+            return
+
+        if nowtimestamp == event['time']:
+            self.delay(event['message'], event.get(
+                'delay', SETTINGS['delay']), event)
+            return
 
     def advance(self, message, duration):
         sublime.message_dialog('advance %(duration)s Hours: %(message)s' % {
@@ -95,4 +107,7 @@ class Timer():
             message,
             'Delay %(delay)s Min' % {'delay': int(duration / 60)}
         ):
-            event['time'] = event['time'] + duration
+            del SETTINGS['eventdict'][event['time']]
+            delaytime = event['time'] + duration
+            event['time'] = delaytime
+            SETTINGS['eventdict'][delaytime] = event
