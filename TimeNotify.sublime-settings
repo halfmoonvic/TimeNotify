@@ -10,17 +10,16 @@
     // %M - Minute as a decimal number [00, 59]
     // %S - Second as a decimal number [00, 61]
     // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
-    // notice you should remove the comment in the /Sublime Text/Packages/Status Bar Time/StatusBarTime.py
     "format": "%H:%M:%S | %j | %m-%d | %A | V?",
 
     // Stick the clock on the left side of the status bar
     // if you change this option, restart is required
     "lefty": true,
 
-    // time to delay notify seconds
+    // Time to delay notify seconds
     "delay": 300,
 
-    // notify events
+    // Notify events, the time setting needs to be adapted to "interval"
     "events": [
        {
             // this day from monday to sunday
@@ -32,19 +31,19 @@
         },
         {
             // this day of the month
-            "time": "29 09:55:30",
+            "time": "28 09:55:00",
             "advance": 86400, // 24 hours
             "message": "day of the month"
         },
         {
             // this day of the year
-            "time": "10-29 09:55:55",
+            "time": "10-29 09:55:00",
             "advance": 86400, // 24 hours
             "message": "day of the year"
         },
         {
             // a specific time
-            "time": "2022-10-29 10:00:40",
+            "time": "2022-10-29 10:00:00",
             "advance": 86400, // 24 hours
             "message": "specific time"
         }

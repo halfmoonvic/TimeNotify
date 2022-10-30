@@ -55,14 +55,14 @@ def plugin_loaded():
 
 class StatusBarTime(sublime_plugin.ViewEventListener):
     def __init__(self, view):
-        Timer().displayTime(view, SETTINGS['interval'], SETTINGS['onlyinview'])
+        Timer().displayTime(view)
 
 
 class Timer():
     def __init__(self):
         self.status_key = '0__statusclock' if SETTINGS['lefty'] else 'statusclock'
 
-    def displayTime(self, view, interval, onlyinview):
+    def displayTime(self, view):
         now = datetime.now()
         view.set_status(self.status_key, now.strftime(SETTINGS['format']))
 
@@ -77,9 +77,9 @@ class Timer():
         if SETTINGS.get('events') and len(SETTINGS['events']) and same_active_view_id:
             self.notify(now)
 
-        if not onlyinview or same_active_view_id:
+        if not SETTINGS['onlyinview'] or same_active_view_id:
             sublime.set_timeout(lambda: self.displayTime(
-                view, interval, onlyinview), interval)
+                view), SETTINGS['interval'])
 
     def notify(self, time):
         nowtimestamp = int(time.timestamp())
