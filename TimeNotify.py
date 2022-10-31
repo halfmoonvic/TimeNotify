@@ -89,7 +89,7 @@ class Timer():
         if not event or not (not event.get('week') or time.weekday() + 1 in event['week']):
             return
 
-        if nowtimestamp == event['time'] - event['advance']:
+        if event.get('advance') and nowtimestamp == event['time'] - event['advance']:
             self.advance(event['message'], event['advance'])
             return
 
