@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import re
 from datetime import datetime
 
 import sublime
@@ -8,6 +7,14 @@ import sublime_plugin
 
 STATUSBARTIME_SETTING_FILE = 'TimeNotify.sublime-settings'
 SETTINGS = {}
+
+TIMEFORMAT = {
+    '%M:%S': 5,
+    '%H:%M:%S': 8,
+    '%d %H:%M:%S': 11,
+    '%m-%d %H:%M:%S': 14,
+    '%Y-%m-%d %H:%M:%S': 19,
+}
 
 
 def get_settings():
@@ -24,17 +31,22 @@ def get_settings():
     events = [event for event in events if event.get('time')]
 
     for event in events:
-        dividing_lines = re.findall('-', event.get('time'))
-        space_counts = re.findall(' ', event.get('time'))
         notify_time = event['time']
-        if len(dividing_lines) == 0:
-            if len(space_counts) == 0:
-                notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
-            else:
-                notify_time = now.strftime('%Y-%m') + '-' + event['time']
-        if len(dividing_lines) == 1:
+        formatter = len(event.get('time', ''))
+
+        if formatter == TIMEFORMAT['%M:%S']:  # 20:00
+            notify_time = now.strftime('%Y-%m-%d %H') + ':' + event['time']
+
+        if formatter == TIMEFORMAT['%H:%M:%S']:  # 18:20:00
+            notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
+
+        if formatter == TIMEFORMAT['%d %H:%M:%S']:  # 10 18:20:00
+            notify_time = now.strftime('%Y-%m') + '-' + event['time']
+
+        if formatter == TIMEFORMAT['%m-%d %H:%M:%S']:  # 11-10 18:20:00
             notify_time = now.strftime('%Y') + '-' + event['time']
-        if len(dividing_lines) == 2:
+
+        if formatter == TIMEFORMAT['%Y-%m-%d %H:%M:%S']:  # 2022-11-10 18:20:00
             notify_time = event['time']
 
         timestamp = int(
@@ -46,6 +58,7 @@ def get_settings():
             SETTINGS['eventdict'][timestamp - event['advance']] = event
 
     SETTINGS['events'] = events
+    print(events)
 
 
 def plugin_loaded():
@@ -90,9 +103,14 @@ class Timer():
         nowtimestamp = int(time.timestamp())
         event = SETTINGS['eventdict'].get(nowtimestamp)
 
-        # some event only happen one day from Monday to Sunday, not every day
-        if not event or not (not event.get('week')
-                             or time.weekday() + 1 in event['week']):
+        if not event or (event.get('hour')
+                         and time.hour not in event['hour']) or (
+                             event.get('week')
+                             and time.weekday() + 1 not in event['week']) or (
+                                 event.get('month')
+                                 and time.month not in event['month']) or (
+                                     event.get('year')
+                                     and time.year not in event['year']):
             return
 
         if event.get('advance'
