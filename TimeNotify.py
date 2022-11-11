@@ -9,6 +9,7 @@ STATUSBARTIME_SETTING_FILE = 'TimeNotify.sublime-settings'
 SETTINGS = {}
 
 TIMEFORMAT = {
+    '%S': 2,
     '%M:%S': 5,
     '%H:%M:%S': 8,
     '%d %H:%M:%S': 11,
@@ -34,17 +35,20 @@ def get_settings():
         notify_time = event['time']
         formatter = len(event.get('time', ''))
 
+        if formatter == TIMEFORMAT['%S']:  # 01
+            notify_time = now.strftime('%Y-%m-%d %H:%M:') + event['time']
+
         if formatter == TIMEFORMAT['%M:%S']:  # 20:00
-            notify_time = now.strftime('%Y-%m-%d %H') + ':' + event['time']
+            notify_time = now.strftime('%Y-%m-%d %H:') + event['time']
 
         if formatter == TIMEFORMAT['%H:%M:%S']:  # 18:20:00
-            notify_time = now.strftime('%Y-%m-%d') + ' ' + event['time']
+            notify_time = now.strftime('%Y-%m-%d ') + event['time']
 
         if formatter == TIMEFORMAT['%d %H:%M:%S']:  # 10 18:20:00
-            notify_time = now.strftime('%Y-%m') + '-' + event['time']
+            notify_time = now.strftime('%Y-%m-') + event['time']
 
         if formatter == TIMEFORMAT['%m-%d %H:%M:%S']:  # 11-10 18:20:00
-            notify_time = now.strftime('%Y') + '-' + event['time']
+            notify_time = now.strftime('%Y-') + event['time']
 
         if formatter == TIMEFORMAT['%Y-%m-%d %H:%M:%S']:  # 2022-11-10 18:20:00
             notify_time = event['time']
@@ -58,7 +62,6 @@ def get_settings():
             SETTINGS['eventdict'][timestamp - event['advance']] = event
 
     SETTINGS['events'] = events
-    print(events)
 
 
 def plugin_loaded():
@@ -103,14 +106,13 @@ class Timer():
         nowtimestamp = int(time.timestamp())
         event = SETTINGS['eventdict'].get(nowtimestamp)
 
-        if not event or (event.get('hour')
-                         and time.hour not in event['hour']) or (
-                             event.get('week')
-                             and time.weekday() + 1 not in event['week']) or (
-                                 event.get('month')
-                                 and time.month not in event['month']) or (
-                                     event.get('year')
-                                     and time.year not in event['year']):
+        if not event or (
+                event.get('minute') and time.minute not in event['minute']
+        ) or (event.get('hour') and time.hour not in event['hour']) or (
+                event.get('week') and time.weekday() + 1 not in event['week']
+        ) or (event.get('day') and time.day not in event['day']) or (
+                event.get('month') and time.month not in event['month']) or (
+                    event.get('year') and time.year not in event['year']):
             return
 
         if event.get('advance'

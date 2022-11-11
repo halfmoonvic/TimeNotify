@@ -20,32 +20,64 @@
     "delay": 300,
 
     // Notify events, the time setting needs to be adapted to "interval"
+    // the full time formatter is %Y-%m-%d %H:%M:%S, for example 2022-11-10 18:20:00
+    // You can choose a second of any minute or any time of an hour, day, week, month, month, year
+    // Note that minute、hour、day、week、month、year is optional, when not set, the default is all time
     "events": [
-       {
-            // this day from monday to sunday
-            "week": [1, 2, 3, 4, 5, 6, 7],
-            "time": "18:20:00",
+        {
+            // 0 - 59
+            "minute": [13, 14, 15, 17, 25],
+            "time": "50",
             "advance": 10,
             "delay": 10,
-            "message": "day from monday to sunday"
+            "message": "minute msg"
         },
         {
-            // this day of the month
-            "time": "28 09:55:00",
-            "advance": 86400, // 24 hours
-            "message": "day of the month"
+            // 0 - 23
+            "hour": [18, 19],
+            "time": "28:50",
+            "advance": 10,
+            "delay": 10,
+            "message": "hour msg"
         },
         {
-            // this day of the year
-            "time": "10-29 09:55:00",
-            "advance": 86400, // 24 hours
-            "message": "day of the year"
+            // 1 - 28/29/30/31
+            "day": [11],
+            "time": "10:31:10",
+            "advance": 10,
+            "delay": 10,
+            "message": "day msg"
         },
         {
-            // a specific time
-            "time": "2022-10-29 10:00:00",
+            // 1 - 7
+            "week": [1, 2, 3, 4, 5, 6, 7],
+            "time": "10:31:10",
+            "advance": 10,
+            "delay": 10,
+            "message": "week msg"
+        },
+        {
+            // 1 - 12
+            "month": [10, 11, 12],
+            "time": "11 10:35:50",
             "advance": 86400, // 24 hours
-            "message": "specific time"
+            "delay": 10,
+            "message": "month msg"
+        },
+        {
+            // every year you want
+            "year": [2022],
+            "time": "11-11 10:38:40",
+            "advance": 86400, // 24 hours
+            "delay": 10,
+            "message": "year msg"
+        },
+        {
+            // special time
+            "time": "2022-11-11 10:42:20",
+            "advance": 86400, // 24 hours
+            "delay": 10,
+            "message": "special time"
         }
     ]
 }
