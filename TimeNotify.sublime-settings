@@ -60,7 +60,6 @@
             // 1 - 12
             "month": [10, 11, 12],
             "time": "11 10:35:50",
-            "advance": 86400, // 24 hours
             "delay": 10,
             "message": "month msg"
         },
@@ -68,14 +67,15 @@
             // every year you want
             "year": [2022],
             "time": "11-11 10:38:40",
-            "advance": 86400, // 24 hours
             "delay": 10,
             "message": "year msg"
         },
         {
             // special time
             "time": "2022-11-11 10:42:20",
-            "advance": 86400, // 24 hours
+            // "advance": 60, // 1 min
+            // "advance": 3600, // 1 hour
+            // "advance": 86400, // 1 day
             "delay": 10,
             "message": "special time"
         }

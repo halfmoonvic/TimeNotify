@@ -64,6 +64,19 @@ def get_settings():
     SETTINGS['events'] = events
 
 
+def get_duration(duration):
+    if duration < 60:
+        return duration, 'seconds'
+
+    if duration < 3600:
+        return int(duration / 60), 'minutes'
+
+    if duration < 86400:
+        return int(duration / 60 / 60), 'hours'
+
+    return int(duration / 60 / 60 / 24), 'days'
+
+
 def plugin_loaded():
     get_settings()
     sublime.load_settings('TimeNotify.sublime-settings').add_on_change(
@@ -126,15 +139,20 @@ class Timer():
             return
 
     def advance(self, message, duration):
-        sublime.message_dialog('advance %(duration)s Hours: %(message)s' % {
-            'duration': int(duration / 60 / 60),
-            'message': message
+        duration, unit = get_duration(duration)
+        sublime.message_dialog('advance %(duration)s %(unit)s: %(message)s' % {
+            'duration': duration,
+            'unit': unit,
+            'message': message,
         })
 
     def delay(self, message, duration, event):
+        duration, unit = get_duration(duration)
         if sublime.ok_cancel_dialog(
-                message,
-                'Delay %(delay)s Min' % {'delay': int(duration / 60)}):
+                message, 'Delay %(delay)s %(unit)s' % {
+                    'delay': duration,
+                    'unit': unit
+                }):
             del SETTINGS['eventdict'][event['time']]
             delaytime = event['time'] + duration
             event['time'] = delaytime
