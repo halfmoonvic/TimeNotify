@@ -27,7 +27,6 @@ def get_settings():
     SETTINGS['format'] = settings.get('format', '%H:%M:%S')
     SETTINGS['interval'] = settings.get('interval', 1000) * 1000
     SETTINGS['delay'] = settings.get('delay', 300)
-    SETTINGS['onlyinview'] = settings.get('onlyinview', False)
     SETTINGS['lefty'] = settings.get('lefty', True)
     SETTINGS['eventdict'] = {}
 
@@ -115,9 +114,8 @@ class Timer():
                 SETTINGS['events']) and same_active_view_id:
             self.notify(now)
 
-        if not SETTINGS['onlyinview'] or same_active_view_id:
-            sublime.set_timeout(lambda: self.displayTime(view),
-                                SETTINGS['interval'])
+        sublime.set_timeout(lambda: self.displayTime(view),
+                            SETTINGS['interval'])
 
     def notify(self, time):
         nowtimestamp = int(time.timestamp())

@@ -2,9 +2,6 @@
     // Clock update interval seconds
     "interval": 1,
 
-    // Display only when there is a view (Making it false will turn clock always even when there is no file in view)
-    "onlyinview": false,
-
     // Specifies date / time format, where:
     // %H - Hour (24-hour clock) as a decimal number [00, 23]
     // %M - Minute as a decimal number [00, 59]
