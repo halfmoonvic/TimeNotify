@@ -6,7 +6,6 @@ import sublime
 import sublime_plugin
 import locale
 
-# locale.setlocale(locale.LC_CTYPE, 'chinese')
 locale.setlocale(locale.LC_ALL, '')
 
 STATUSBARTIME_SETTING_FILE = 'TimeNotify.sublime-settings'
