@@ -20,7 +20,7 @@
     // These reminders are set to any form of time, such as any second of a certain minute, a certain hour, a certain day, a certain week, a certain month, or any time of a certain year.
     // Note that the settings of minute, hour, day, week, month, and year are all optional,
     // and you can freely combine them according to your needs.
-    // When these specific settings are not used, you need to specify the "time" option format as "full time" format,
+    // When these specific settings are not used, you need to specify the "time" option format as "%Y-%m-%d %H:%M:%S",
     // such as "2022-11-10 18:20:00".
     // In this configuration item, you can also set the message content and the delay or advance time of the reminder.
     "events": [
