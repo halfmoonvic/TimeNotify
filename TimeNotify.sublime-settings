@@ -7,7 +7,7 @@
     // %M - Minute as a decimal number [00, 59]
     // %S - Second as a decimal number [00, 61]
     // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
-    "format": "%H:%M:%S | %j | %m-%d | %A | V?",
+    "format": "%H:%M:%S | %j | %m-%d | %A",
 
     // Stick the clock on the left side of the status bar
     // if you change this option, restart is required
@@ -25,58 +25,43 @@
     // In this configuration item, you can also set the message content and the delay or advance time of the reminder.
     "events": [
         {
-            // 0 - 59
-            "minute": [13, 14, 15, 17, 25],
-            "time": "50",
-            "advance": 10,
-            "delay": 10,
-            "message": "minute msg"
-        },
-        {
-            // 0 - 23
-            "hour": [18, 19],
-            "time": "28:50",
-            "advance": 10,
-            "delay": 10,
-            "message": "hour msg"
-        },
-        {
-            // 1 - 28/29/30/31
-            "day": [11],
-            "time": "10:31:10",
-            "advance": 10,
-            "delay": 10,
-            "message": "day msg"
-        },
-        {
             // 1 - 7
             "week": [1, 2, 3, 4, 5, 6, 7],
-            "time": "10:31:10",
+            "time": "08:10:10",
             "advance": 10,
             "delay": 10,
             "message": "week msg"
         },
         {
+            "minute": [10],
+            "time": "10",
+            "message": "minute msg"
+        },
+        {
+            // 0 - 23
+            "hour": [08],
+            "time": "10:10",
+            "message": "hour msg"
+        },
+        {
+            // 1 - 31
+            "day": [06],
+            "time": "08:10:10",
+            "message": "day msg"
+        },
+        {
             // 1 - 12
-            "month": [10, 11, 12],
-            "time": "11 10:35:50",
-            "delay": 10,
+            "month": [08],
+            "time": "06 08:10:10",
             "message": "month msg"
         },
         {
-            // every year you want
-            "year": [2022],
-            "time": "11-11 10:38:40",
-            "delay": 10,
+            "year": [2023],
+            "time": "06-06 08:10:10",
             "message": "year msg"
         },
         {
-            // special time
-            "time": "2022-11-11 10:42:20",
-            // "advance": 60, // 1 min
-            // "advance": 3600, // 1 hour
-            // "advance": 86400, // 1 day
-            "delay": 10,
+            "time": "2023-06-06 08:10:10",
             "message": "special time"
         }
     ]
