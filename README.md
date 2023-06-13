@@ -144,7 +144,3 @@ In this configuration item, you can also set the message content and the delay o
     "time": "06-06 08:10:10", // %m-%d %H:%M:%S
     "message": "year msg"
     ```
-
-----------
-
-The following code is an example of events configuration items
