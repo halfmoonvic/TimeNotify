@@ -7,7 +7,7 @@
     // %M - Minute as a decimal number [00, 59]
     // %S - Second as a decimal number [00, 61]
     // For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
-    "format": "%H:%M:%S | %j | %m-%d | %A",
+    "format": "%H:%M:%S | %m-%d | %A",
 
     // Stick the clock on the left side of the status bar
     // if you change this option, restart is required

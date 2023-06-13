@@ -4,6 +4,14 @@ TimeNotify is a Sublime Text plugin that displays the current time in the status
 
 it is inspired by [Status Bar Time](https://packagecontrol.io/packages/Status%20Bar%20Time)
 
+1. event to be notified
+    
+    ![event](./assets/event.png)
+
+2. time in the status bar
+
+    ![time](./assets/time.png)
+
 ## How to install
 
 * Clone or [download](https://github.com/halfmoonvic/TimeNotify/archive/master.zip) git repo into your packages folder
@@ -22,7 +30,7 @@ The clock update interval is in seconds. The default is 1.
 
 **`format: "%H:%M:%S`:**
 
-The time format is to display in the status bar. Default is `%H:%M:%S | %j | %m-%d | %A`. [refer document](http://docs.python.org/2/library/time.html#time.strftime)
+The time format is to display in the status bar. Default is `%H:%M:%S | %m-%d | %A`. [refer document](http://docs.python.org/2/library/time.html#time.strftime)
 
 **`lefty: true`:**
 
