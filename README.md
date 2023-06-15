@@ -100,7 +100,7 @@ In this configuration item, you can also set the message content and the delay o
      it will remind you at 08:10:10 and 09:10:10 every day.
 
     ```
-    "hour": [08, 09],
+    "hour": [8, 9],
     "time": "10:10", // %M:%S
     "message": "hour msg"
     ```
@@ -136,7 +136,7 @@ In this configuration item, you can also set the message content and the delay o
      it will remind you at 08:10:10 in June and October every year.
 
     ```
-    "month": [06, 10],
+    "month": [6, 10],
     "time": "06 08:10:10", // %d %H:%M:%S
     "message": "month msg"
     ```
