@@ -24,45 +24,45 @@
     // such as "2022-11-10 18:20:00".
     // In this configuration item, you can also set the message content and the delay or advance time of the reminder.
     "events": [
-        {
-            // 1 - 7
-            "week": [1, 2, 3, 4, 5, 6, 7],
-            "time": "08:10:10",
-            "advance": 10,
-            "delay": 10,
-            "message": "week msg"
-        },
-        {
-            "minute": [10],
-            "time": "10",
-            "message": "minute msg"
-        },
-        {
-            // 0 - 23
-            "hour": [8],
-            "time": "10:10",
-            "message": "hour msg"
-        },
-        {
-            // 1 - 31
-            "day": [6],
-            "time": "08:10:10",
-            "message": "day msg"
-        },
-        {
-            // 1 - 12
-            "month": [8],
-            "time": "06 08:10:10",
-            "message": "month msg"
-        },
-        {
-            "year": [2023],
-            "time": "06-06 08:10:10",
-            "message": "year msg"
-        },
-        {
-            "time": "2023-06-06 08:10:10",
-            "message": "special time"
-        }
+        // {
+        //     // 1 - 7
+        //     "week": [1, 2, 3, 4, 5, 6, 7],
+        //     "time": "08:10:10",
+        //     "advance": 10,
+        //     "delay": 10,
+        //     "message": "week msg"
+        // },
+        // {
+        //     "minute": [10],
+        //     "time": "10",
+        //     "message": "minute msg"
+        // },
+        // {
+        //     // 0 - 23
+        //     "hour": [8],
+        //     "time": "10:10",
+        //     "message": "hour msg"
+        // },
+        // {
+        //     // 1 - 31
+        //     "day": [6],
+        //     "time": "08:10:10",
+        //     "message": "day msg"
+        // },
+        // {
+        //     // 1 - 12
+        //     "month": [8],
+        //     "time": "06 08:10:10",
+        //     "message": "month msg"
+        // },
+        // {
+        //     "year": [2023],
+        //     "time": "06-06 08:10:10",
+        //     "message": "year msg"
+        // },
+        // {
+        //     "time": "2023-06-06 08:10:10",
+        //     "message": "special time"
+        // }
     ]
 }
