@@ -24,6 +24,77 @@ it is inspired by [Status Bar Time](https://packagecontrol.io/packages/Status%20
 
 ## Settings
 
+Example config:
+
+```
+// Clock update interval seconds
+"interval": 1,
+
+// Specifies date / time format, where:
+// %H - Hour (24-hour clock) as a decimal number [00, 23]
+// %M - Minute as a decimal number [00, 59]
+// %S - Second as a decimal number [00, 61]
+// For more information, please refer to: http://docs.python.org/2/library/time.html#time.strftime
+"format": "%H:%M:%S | %m-%d | %A",
+
+// Stick the clock on the left side of the status bar
+// if you change this option, restart is required
+"lefty": true,
+
+// Time to delay notify seconds
+"delay": 300,
+
+// By setting the "events" configuration item, you can create reminders at specific times or dates.
+// These reminders are set to any form of time, such as any second of a certain minute, a certain hour, a certain day, a certain week, a certain month, or any time of a certain year.
+// Note that the settings of minute, hour, day, week, month, and year are all optional,
+// and you can freely combine them according to your needs.
+// When these specific settings are not used, you need to specify the "time" option format as "%Y-%m-%d %H:%M:%S",
+// such as "2022-11-10 18:20:00".
+// In this configuration item, you can also set the message content and the delay or advance time of the reminder.
+"events": [
+    {
+        // 1 - 7
+        "week": [1, 2, 3, 4, 5, 6, 7],
+        "time": "08:10:10",
+        "advance": 10,
+        "delay": 10,
+        "message": "week msg"
+    },
+    {
+        "minute": [10],
+        "time": "10",
+        "message": "minute msg"
+    },
+    {
+        // 0 - 23
+        "hour": [8],
+        "time": "10:10",
+        "message": "hour msg"
+    },
+    {
+        // 1 - 31
+        "day": [6],
+        "time": "08:10:10",
+        "message": "day msg"
+    },
+    {
+        // 1 - 12
+        "month": [8],
+        "time": "06 08:10:10",
+        "message": "month msg"
+    },
+    {
+        "year": [2023],
+        "time": "06-06 08:10:10",
+        "message": "year msg"
+    },
+    {
+        "time": "2023-06-06 08:10:10",
+        "message": "special time"
+    }
+]
+```
+
 **`interval: 1`:**
 
 The clock update interval is in seconds. The default is 1.
