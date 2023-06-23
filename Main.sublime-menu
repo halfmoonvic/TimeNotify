@@ -13,18 +13,12 @@
                         "caption": "TimeNotify",
                         "children": [
                             {
-                                "command": "open_file",
+                                "caption": "Settings",
+                                "command": "edit_settings",
                                 "args": {
-                                    "file": "${packages}/TimeNotify/TimeNotify.sublime-settings"
-                                },
-                                "caption": "Settings – Default"
-                            },
-                            {
-                                "command": "open_file",
-                                "args": {
-                                    "file": "${packages}/User/TimeNotify.sublime-settings"
-                                },
-                                "caption": "Settings – User"
+                                    "base_file": "${packages}/TimeNotify/TimeNotify.sublime-settings",
+                                    "default": "// TimeNotify Settings - User\n{\n\t$0\n}\n"
+                                }
                             }
                         ]
                     }
